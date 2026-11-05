@@ -23,7 +23,9 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
+
 target_link_libraries(${PROJECT_NAME} PRIVATE raylib)
+target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     C_STANDARD 23
