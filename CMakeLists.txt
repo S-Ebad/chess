@@ -11,14 +11,15 @@ endif()
 include(FetchContent)
 
 FetchContent_Declare(raylib
-    GIT_REPOSITORY https://github.com/raysan5/raylib.git
-    GIT_TAG 5.5
-    GIT_SHALLOW TRUE
+    URL https://github.com/raysan5/raylib/archive/refs/tags/5.5.tar.gz
+    URL_HASH SHA256=aea98ecf5bc5c5e0b789a76de0083a21a70457050ea4cc2aec7566935f5e258e
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     SYSTEM)
 
 FetchContent_Declare(nanosvg
-    GIT_REPOSITORY https://github.com/memononen/nanosvg.git
-    GIT_TAG 239e102ec2c691f2902e20ace2ed36ee4a35cfe6
+    URL https://github.com/memononen/nanosvg/archive/239e102ec2c691f2902e20ace2ed36ee4a35cfe6.tar.gz
+    URL_HASH SHA256=2bc68bdb518d7800252042e5cad50a0ab321596f0cbf49ef2a752926329063d2
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     SYSTEM)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
