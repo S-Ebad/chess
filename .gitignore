@@ -1,0 +1,12 @@
+# Build
+build/
+
+# cache
+.cache
+
+# ide cruft
+.vscode/
+.idea/
+*.swp
+
+.cppx.json
