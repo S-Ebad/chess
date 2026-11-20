@@ -1,6 +1,5 @@
 #pragma once
 #include <expected>
-#include <nanosvgrast.h>
 #include <raylib.h>
 #include <string>
 #include <utility>
@@ -11,6 +10,8 @@ using TextureResult = std::expected<Texture, std::string>;
 
 class Texture {
 public:
+  constexpr Texture() : m_texture{} {
+  }
   static TextureResult from_file(const std::string &path, int width);
 
   ~Texture() {
@@ -21,13 +22,39 @@ public:
   // no copies
   Texture(const Texture &) = delete;
   Texture &operator=(const Texture &) = delete;
-  Texture &operator=(Texture &&other) = delete;
 
   Texture(Texture &&other) noexcept : m_texture{std::exchange(other.m_texture, Texture2D{})} {
   }
 
+  Texture &operator=(Texture &&other) noexcept {
+    if (this == &other) {
+      return *this;
+    }
+
+    if (m_texture.id != 0) {
+      UnloadTexture(m_texture);
+    }
+
+    m_texture = std::exchange(other.m_texture, Texture2D{});
+    return *this;
+  }
+
+  Texture2D *operator->() {
+    return &m_texture;
+  }
+  const Texture2D *operator->() const {
+    return &m_texture;
+  }
+
+  Texture2D &operator*() {
+    return m_texture;
+  }
+  const Texture2D &operator*() const {
+    return m_texture;
+  }
+
 private:
-  Texture(Texture2D texture) : m_texture{texture} {
+  explicit Texture(Texture2D texture) : m_texture{texture} {
   }
 
   Texture2D m_texture;

@@ -7,7 +7,6 @@
 #include <span>
 #include <string>
 
-
 // A simple NSVG wrapper in C++
 namespace renderer {
 using NSVGResult = std::expected<class NSVG, std::string>;
@@ -15,18 +14,26 @@ using NSVGResult = std::expected<class NSVG, std::string>;
 class NSVG {
 public:
   static NSVGResult from_file(const std::string &path) {
-    auto svg = nsvgParseFromFile(path.c_str(), "px", 96.0f);
+    auto nsvg = NSVG{nsvgParseFromFile(path.c_str(), "px", 96.0f)};
 
-    if (!svg || svg->width <= 0 || svg->height <= 0) {
+    if (!nsvg.m_image || nsvg->width <= 0 || nsvg->height <= 0) {
       return std::unexpected(std::format("Failed to load SVG: {}", path));
     }
 
-    return NSVG{svg};
+    return nsvg;
   }
 
-  void rasterize(float tx, float ty, float scale, std::span<unsigned char> dst, int w, int h,
+  [[nodiscard("Check whether rasterization succeeded")]]
+  bool rasterize(float tx, float ty, float scale, std::span<unsigned char> dst, int w, int h,
                  int stride) {
-    nsvgRasterize(get_rasterizer(), m_image.get(), tx, ty, scale, dst.data(), w, h, stride);
+    auto *rasterizer = get_rasterizer();
+
+    if (!rasterizer) {
+      return false; // failed to rasterize
+    }
+
+    nsvgRasterize(rasterizer, m_image.get(), tx, ty, scale, dst.data(), w, h, stride);
+    return true;
   }
 
   const NSVGimage *operator->() const {
