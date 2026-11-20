@@ -41,6 +41,9 @@ target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${nanosvg_SOURCE_DIR}/src)
 
+# Absolute path to the assets in the source tree, so the binary finds them from any working directory
+target_compile_definitions(${PROJECT_NAME} PRIVATE CHESS_ASSETS_DIR="${CMAKE_SOURCE_DIR}/assets")
+
 set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD 23
     CXX_STANDARD_REQUIRED ON
