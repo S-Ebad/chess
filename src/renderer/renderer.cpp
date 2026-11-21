@@ -60,7 +60,7 @@ bool Renderer::should_close() {
   return WindowShouldClose();
 }
 
-void Renderer::draw(const Board & /*_*/) {
+void Renderer::draw(const chess::Board & /*_*/) {
   BeginDrawing();
   ClearBackground(WHITE);
 
@@ -99,7 +99,7 @@ std::expected<void, std::string> Renderer::load_pieces() {
       }
 
       // INVARIANT: type != PieceType::None, so the optional is engaged.
-      const auto symbol = *Piece::piece_symbol(type);
+      const auto symbol = *chess::Piece::piece_symbol(type);
       const auto side_name = magic_enum::enum_name(side);
 
       char lower = static_cast<char>(std::tolower(static_cast<unsigned char>(side_name[0])));

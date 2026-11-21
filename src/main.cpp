@@ -6,7 +6,7 @@
 
 int main() {
   auto renderer = renderer::Renderer::create();
-  auto board = Board {};
+  auto board = chess::Board {};
 
   if (!renderer) {
     std::println(stderr, "Error: {}", renderer.error());

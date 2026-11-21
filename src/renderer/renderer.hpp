@@ -11,6 +11,9 @@
 #include <string>
 
 namespace renderer {
+// used a lot
+using chess::Side, chess::PieceType;
+
 class Renderer {
 public:
   [[nodiscard]]
@@ -23,7 +26,7 @@ public:
   Renderer &operator=(const Renderer &) = delete;
   Renderer &operator=(Renderer &&) = delete;
 
-  void draw(const Board &board);
+  void draw(const chess::Board &board);
 
   [[nodiscard]]
   bool should_close();

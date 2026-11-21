@@ -4,6 +4,7 @@
 #include <array>
 #include <cstdint>
 
+namespace chess {
 // clang-format off
 enum class File : std::uint8_t {
   A, B, C, D, E, F, G, H
@@ -28,3 +29,4 @@ private:
   std::array<Piece, 64> m_squares;
   Side m_side_to_move = Side::White;
 };
+} // namespace chess

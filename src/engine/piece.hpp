@@ -2,6 +2,7 @@
 #include <cstdint>
 #include <optional>
 
+namespace chess {
 enum class PieceType : std::uint8_t {
   None,
   Pawn,
@@ -23,11 +24,13 @@ public:
   constexpr Piece(PieceType type, Side side) : m_type{type}, m_side{side} {
   }
 
-  [[nodiscard]] constexpr PieceType type() const {
+  [[nodiscard]]
+  constexpr PieceType type() const {
     return m_type;
   }
 
-  [[nodiscard]] constexpr Side side() const {
+  [[nodiscard]]
+  constexpr Side side() const {
     return m_side;
   }
 
@@ -54,3 +57,4 @@ private:
   PieceType m_type = PieceType::None;
   Side m_side = Side::White;
 };
+} // namespace chess
