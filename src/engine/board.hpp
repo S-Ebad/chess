@@ -18,16 +18,21 @@ enum class Rank : std::uint8_t {
 
 using Square = int8_t;
 
+// The pieces on the board and whose turn it is.
 class Board {
 public:
+  // Creates an empty board with White to move.
   Board() : m_squares{} {
   }
 
+  // Returns the piece on the given file and rank (a piece of type None if the square is empty).
   Piece operator[](File file, Rank rank) const;
+
+  // Returns the piece on the given square (a piece of type None if the square is empty).
   Piece operator[](Square sq) const;
 
 private:
   std::array<Piece, constants::SQUARE_COUNT> m_squares;
-  Side m_side_to_move = Side::White;
+  Side m_side_to_move = Side::White; // whose turn it is
 };
 } // namespace chess
