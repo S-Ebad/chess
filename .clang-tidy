@@ -15,35 +15,16 @@ Checks:
   - readability-*
 
   - -bugprone-easily-swappable-parameters
-  - -misc-const-correctness
-  - -misc-multiple-inheritance
   - -misc-no-recursion
-  - -misc-non-private-member-variables-in-classes
   - -misc-use-anonymous-namespace
-  - -modernize-return-braced-init-list
-  - -modernize-use-designated-initializers
-  - -modernize-use-integer-sign-comparison
-  - -modernize-use-nodiscard
   - -modernize-use-trailing-return-type
-  - -readability-avoid-nested-conditional-operator
-  - -readability-braces-around-statements
-  - -readability-convert-member-functions-to-static
   - -readability-else-after-return
   - -readability-function-cognitive-complexity
   - -readability-identifier-length
   - -readability-implicit-bool-conversion
-  - -readability-inconsistent-ifelse-braces
-  - -readability-isolate-declaration
-  - -readability-magic-numbers
   - -readability-math-missing-parentheses
-  - -readability-named-parameter
-  - -readability-qualified-auto
-  - -readability-redundant-parentheses
   - -readability-trailing-comma
   - -readability-uppercase-literal-suffix
-  - -readability-use-anyofallof
-  - -readability-use-concise-preprocessor-directives
-  - -clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling
 
 WarningsAsErrors: ""
 HeaderFilterRegex: ".*"
