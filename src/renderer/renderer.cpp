@@ -1,7 +1,6 @@
 #include "renderer.hpp"
 #include "constants.hpp"
 #include "engine/board.hpp"
-#include "engine/constants.hpp"
 #include "engine/piece.hpp"
 #include "renderer/texture.hpp"
 #include "renderer/window.hpp"
@@ -21,6 +20,7 @@
 namespace fs = std::filesystem;
 
 namespace {
+// Draws the 8x8 grid of light and dark squares, with a8 in the top-left corner.
 void draw_board() {
   using namespace renderer::constants;
 
@@ -92,6 +92,9 @@ void Renderer::draw(const chess::Board & /*_*/) {
   EndDrawing();
 }
 
+// Builds each file name from the side's first letter and the piece symbol
+// (e.g. White + Knight -> "wN.svg"), loads it from ASSETS_DIR at SQUARE_SIZE
+// pixels wide, and stores it in m_pieces. Stops at the first failure.
 std::expected<void, std::string> Renderer::load_pieces() {
   for (const auto side : magic_enum::enum_values<Side>()) {
     for (const auto type : magic_enum::enum_values<PieceType>()) {

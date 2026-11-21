@@ -10,6 +10,9 @@
 #include <vector>
 
 namespace renderer {
+// Parses the SVG, scales it to `width` (height follows the aspect ratio),
+// rasterizes it into an RGBA pixel buffer, and uploads that to the GPU.
+// The pixel buffer is only needed during the upload and is freed afterwards.
 TextureResult Texture::from_file(const std::string &path, int width) {
   NSVGResult result = NSVG::from_file(path);
   if (!result) {
