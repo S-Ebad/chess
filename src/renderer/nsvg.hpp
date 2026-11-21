@@ -14,7 +14,8 @@ using NSVGResult = std::expected<class NSVG, std::string>;
 class NSVG {
 public:
   static NSVGResult from_file(const std::string &path) {
-    auto nsvg = NSVG{nsvgParseFromFile(path.c_str(), "px", 96.0f)};
+    constexpr float SVG_DPI = 96.0f;
+    auto nsvg = NSVG{nsvgParseFromFile(path.c_str(), "px", SVG_DPI)};
 
     if (!nsvg.m_image || nsvg->width <= 0 || nsvg->height <= 0) {
       return std::unexpected(std::format("Failed to load SVG: {}", path));
@@ -44,7 +45,8 @@ private:
   explicit constexpr NSVG(NSVGimage *image) : m_image{image, &nsvgDelete} {
   }
 
-  NSVGrasterizer *get_rasterizer() {
+  [[nodiscard]]
+  static NSVGrasterizer *get_rasterizer() {
     static auto rasterizer = std::unique_ptr<NSVGrasterizer, decltype(&nsvgDeleteRasterizer)>(
         nsvgCreateRasterizer(), &nsvgDeleteRasterizer);
 

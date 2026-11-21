@@ -1,5 +1,6 @@
 #pragma once
 
+#include "engine/constants.hpp"
 #include "piece.hpp"
 #include <array>
 #include <cstdint>
@@ -26,7 +27,7 @@ public:
   Piece operator[](Square sq) const;
 
 private:
-  std::array<Piece, 64> m_squares;
+  std::array<Piece, constants::SQUARE_COUNT> m_squares;
   Side m_side_to_move = Side::White;
 };
 } // namespace chess

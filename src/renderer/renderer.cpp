@@ -1,6 +1,7 @@
 #include "renderer.hpp"
 #include "constants.hpp"
 #include "engine/board.hpp"
+#include "engine/constants.hpp"
 #include "engine/piece.hpp"
 #include "renderer/texture.hpp"
 #include "renderer/window.hpp"
@@ -21,10 +22,10 @@ namespace fs = std::filesystem;
 
 namespace {
 void draw_board() {
-  using namespace renderer;
+  using namespace renderer::constants;
 
-  for (int row = 0; row < 8; ++row) {
-    for (int col = 0; col < 8; ++col) {
+  for (int row = 0; row < BOARD_SIZE; ++row) {
+    for (int col = 0; col < BOARD_SIZE; ++col) {
       Color color = ((row + col) % 2 == 0) ? LIGHT_SQUARE : DARK_SQUARE;
 
       int x = col * SQUARE_SIZE;
@@ -38,7 +39,7 @@ void draw_board() {
 
 namespace renderer {
 std::expected<Renderer, std::string> Renderer::create() {
-  auto window = Window::create(WINDOW_SIZE, WINDOW_SIZE, "chess");
+  auto window = Window::create(constants::WINDOW_SIZE, constants::WINDOW_SIZE, "chess");
   if (!window) {
     return std::unexpected(std::move(window.error()));
   }
@@ -56,7 +57,7 @@ std::expected<Renderer, std::string> Renderer::create() {
 Renderer::Renderer(Window window) : m_window(std::move(window)) {
 }
 
-bool Renderer::should_close() {
+bool Renderer::should_close() { // NOLINT
   return WindowShouldClose();
 }
 
@@ -78,10 +79,10 @@ void Renderer::draw(const chess::Board & /*_*/) {
       }
 
       const auto &texture = (*this)[side, type];
-      DrawTexture(*texture, static_cast<int>(width) * SQUARE_SIZE,
-                  static_cast<int>(height) * SQUARE_SIZE, RAYWHITE);
+      DrawTexture(*texture, static_cast<int>(width) * constants::SQUARE_SIZE,
+                  static_cast<int>(height) * constants::SQUARE_SIZE, RAYWHITE);
 
-      if (++width == BOARD_SIZE) {
+      if (++width == constants::BOARD_SIZE) {
         width = 0;
         ++height;
       }
@@ -106,9 +107,9 @@ std::expected<void, std::string> Renderer::load_pieces() {
       char upper = static_cast<char>(std::toupper(symbol));
 
       const auto filename{std::format("{}{}.svg", lower, upper)};
-      const fs::path file_path{fs::path{ASSETS_DIR} / filename};
+      const fs::path file_path{fs::path{constants::ASSETS_DIR} / filename};
 
-      TextureResult result = Texture::from_file(file_path.string(), SQUARE_SIZE);
+      TextureResult result = Texture::from_file(file_path.string(), constants::SQUARE_SIZE);
 
       if (!result) {
         return std::unexpected(std::move(result.error()));

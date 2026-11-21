@@ -15,8 +15,9 @@ public:
   static TextureResult from_file(const std::string &path, int width);
 
   ~Texture() {
-    if (m_texture.id != 0)
+    if (m_texture.id != 0) {
       UnloadTexture(m_texture);
+    }
   }
 
   // no copies

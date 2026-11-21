@@ -24,8 +24,10 @@ TextureResult Texture::from_file(const std::string &path, int width) {
   std::vector<unsigned char> pixels(static_cast<std::size_t>(width * height * 4));
 
   auto success = svg.rasterize(0, 0, scale, pixels, width, height, width * 4);
-  if (!success)
+
+  if (!success) {
     return std::unexpected(std::format("Failed to rasterize SVG Image: {}", path));
+  }
 
   Image img{};
   img.data = pixels.data();
