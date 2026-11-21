@@ -18,12 +18,13 @@ using Square = int8_t;
 
 class Board {
 public:
-  Board();
+  Board() : m_squares{} {
+  }
 
   Piece operator[](File file, Rank rank) const;
   Piece operator[](Square sq) const;
 
 private:
   std::array<Piece, 64> m_squares;
-  Side m_side_to_move;
+  Side m_side_to_move = Side::White;
 };

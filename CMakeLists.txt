@@ -21,9 +21,14 @@ FetchContent_Declare(nanosvg
     URL_HASH SHA256=2bc68bdb518d7800252042e5cad50a0ab321596f0cbf49ef2a752926329063d2
     DOWNLOAD_EXTRACT_TIMESTAMP TRUE
     SYSTEM)
+FetchContent_Declare(magic_enum
+    URL https://github.com/Neargye/magic_enum/archive/refs/tags/v0.9.7.tar.gz
+    URL_HASH SHA256=b403d3dad4ef542fdc3024fa37d3a6cedb4ad33c72e31b6d9bab89dcaf69edf7
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+    SYSTEM)
 set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 
-FetchContent_MakeAvailable(raylib nanosvg)
+FetchContent_MakeAvailable(raylib nanosvg magic_enum)
 
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
     "src/*.cpp"
@@ -31,10 +36,13 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-target_link_libraries(${PROJECT_NAME} PRIVATE raylib nanosvg nanosvgrast)
+target_link_libraries(${PROJECT_NAME} PRIVATE raylib nanosvg nanosvgrast magic_enum::magic_enum)
 target_include_directories(${PROJECT_NAME} PRIVATE src)
 
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${nanosvg_SOURCE_DIR}/src)
+
+# Absolute path to the assets in the source tree, so the binary finds them from any working directory
+target_compile_definitions(${PROJECT_NAME} PRIVATE CHESS_ASSETS_DIR="${CMAKE_SOURCE_DIR}/assets")
 
 set_target_properties(${PROJECT_NAME} PROPERTIES
     CXX_STANDARD 23

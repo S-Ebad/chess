@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <optional>
 
 enum class PieceType : std::uint8_t {
   None,
@@ -28,6 +29,25 @@ public:
 
   [[nodiscard]] constexpr Side side() const {
     return m_side;
+  }
+
+  static constexpr std::optional<char> piece_symbol(PieceType type) {
+    switch (type) {
+    case PieceType::Pawn:
+      return 'p';
+    case PieceType::Knight:
+      return 'n';
+    case PieceType::Bishop:
+      return 'b';
+    case PieceType::Rook:
+      return 'r';
+    case PieceType::Queen:
+      return 'q';
+    case PieceType::King:
+      return 'k';
+    default:
+      return std::nullopt;
+    }
   }
 
 private:
